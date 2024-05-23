@@ -3,18 +3,18 @@ version: '3.8'
 services:
   greetings-app-dev:
     image: kkello/python-greetings-app:latest
-    container_name: greetings-app-dev
+    container_name: python-greetings-app-dev
     ports:
       - "7001:3000"
 
   greetings-app-stg:
     image: kkello/python-greetings-app:latest
-    container_name: greetings-app-stg
+    container_name: python-greetings-app-stg
     ports:
       - "7002:3000"
 
   greetings-app-prod:
     image: kkello/python-greetings-app:latest
-    container_name: greetings-app-prod
+    container_name: python-greetings-app-prod
     ports:
       - "7003:3000"
