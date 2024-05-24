@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        PATH = "$PATH:/usr/local/bin"
+    }
     agent any
     triggers {
         pollSCM('*/1 * * * *')
