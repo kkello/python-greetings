@@ -13,7 +13,7 @@ pipeline {
         }
         stage('tests-on-dev') {
             steps {
-                execute_api_tests("dev")
+                start_api_tests("dev")
             }
         }
         stage('deploy-to-stg') {
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('tests-on-stg') {
             steps {
-                execute_api_tests("stg")
+                start_api_tests("stg")
             }
         }
         stage('deploy-to-prod') {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('tests-on-prod') {
             steps {
-                execute_api_tests("prod")
+                start_api_tests("prod")
             }
         }
     }
@@ -48,21 +48,19 @@ def build_docker_image(){
 }
 
 def deploy_to_environment(String environment){
-    echo "Starting deployment for ${environment}"
-    echo "Pulling latest image"
+    echo "Deploying to: ${environment}"
     sh "docker pull kkello/python-greetings-app:latest"
 
     echo "Stopping and removing previous environment"
-    sh "docker-compose-v1 stop greetings-app-${environment}"
-    sh "docker-compose-v1 rm greetings-app-${environment}"
+    sh "docker-compose stop greetings-app-${environment}"
+    sh "docker-compose rm greetings-app-${environment}"
 
     echo "Starting docker again"
-    sh "docker-compose-v1 up -d greetings-app-${environment}"
+    sh "docker-compose up -d greetings-app-${environment}"
 }
 
-def execute_api_tests(String environment){
+def start_api_tests(String environment){
     echo "Starting API tests"
-    echo "Pulling latest API test image"
     sh "docker pull kkello/api-tests:latest"
 
     echo "Executing API tests for ${environment}"
