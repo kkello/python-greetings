@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    triggers {
-        pollSCM('*/1 * * * *')
-    }
     stages {
         stage('build-docker-image') {
             steps {
@@ -55,7 +52,7 @@ def deploy_to_environment(String environment){
     echo "Pulling latest image"
     sh "docker pull kkello/python-greetings-app:latest"
 
-    echo "Stopping & removing previous environment"
+    echo "Stopping and removing previous environment"
     sh "docker-compose-v1 stop greetings-app-${environment}"
     sh "docker-compose-v1 rm greetings-app-${environment}"
 
